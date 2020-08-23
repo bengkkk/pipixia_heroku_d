@@ -1,2 +1,2 @@
 #!/bin/bash
-service ssh restart && python3 /workarea/pipixia_main.py
+python3 /workarea/pipixia_main.py 0.0.0.0:$(PORT)
