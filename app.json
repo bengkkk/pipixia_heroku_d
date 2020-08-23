@@ -1,0 +1,28 @@
+{
+  "name": "pipixia",
+  "repository": "https://github.com/bengkkk/pipixia_heroku_d",
+  "env": {
+    "Db_username": {
+      "description": "Db_username",
+      "value": "Db_username"
+    },
+    "Db_password": {
+      "description": "Db_password",
+      "value": "Db_password"
+    },
+    "Db_host": {
+      "description": "Db_host",
+      "value": "Db_host"
+    },
+    "Db_port": {
+      "description": "Db_port",
+      "value": "Db_port"
+    },
+    "Db_table": {
+      "description": "Db_table",
+      "value": "Db_table"
+    }
+  },
+  "website": "https://example.com",
+  "stack": "container"
+}
