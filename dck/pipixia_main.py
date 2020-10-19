@@ -17,20 +17,45 @@ Db_table = os.getenv("Db_table")
 PORT = os.getenv("PORT")
 
 
-def video_info(url):
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/81.0.4044.138 Safari/537.36 Edg/81.0.416.72 '
-    }
-    video_num = str(requests.get(url).url).split('/')[-1].split('?')[0]
-    URL = 'https://h5.pipix.com/bds/webapi/item/detail/?item_id=' + video_num + '&source=share'
-    r1 = requests.get(URL, headers=headers)
-    video_name = r1.json()['data']['item']['content']
+# V1
+# def video_info(url):
+#     headers = {
+#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
+#                       'Chrome/81.0.4044.138 Safari/537.36 Edg/81.0.416.72 '
+#     }
+#     video_num = str(requests.get(url).url).split('/')[-1].split('?')[0]
+#     URL = 'https://h5.pipix.com/bds/webapi/item/detail/?item_id=' + video_num + '&source=share'
+#     r1 = requests.get(URL, headers=headers)
+#     video_name = r1.json()['data']['item']['content']
+#
+#     if video_name == '':
+#         video_name = int(random.random() * 2 * 1000)
+#     video_name = str(video_name) + ".mp4"
+#     video_url = r1.json()["data"]["item"]["origin_video_download"]["url_list"][0]["url"]
+#     return video_url, video_name
 
+# V2 版本  第三方api解析
+def video_info(url):
+
+    api_url = "https://v1.alapi.cn/api/video/url"
+
+    payload = {
+        "url": url
+    }
+    headers = {'Content-Type': "application/x-www-form-urlencoded"}
+
+    response = requests.request("POST", api_url, data=payload, headers=headers)
+
+    response = json.loads(response.text)
+    video_data = response["data"]
+
+    video_name = video_data["title"]
     if video_name == '':
         video_name = int(random.random() * 2 * 1000)
     video_name = str(video_name) + ".mp4"
-    video_url = r1.json()["data"]["item"]["origin_video_download"]["url_list"][0]["url"]
+    video_url = video_data["video_url"]
+    print(video_name)
+    print(video_url)
     return video_url, video_name
 
 
